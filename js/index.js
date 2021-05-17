@@ -8,52 +8,30 @@ window.onload = function() {
 	var points = [],
 		sticks = [],
 		bounce = 0.9,
-		gravity = 0.5,
+		gravity = 0.7,
 		friction = 0.999,
 		angle = 0,
-		speed = 0.1,
-        c={x:400,y:500,r:50,oldx:400,oldy:500}
-		engine = {
-			baseX: 450,
-			baseY: 100,
-			range: 100,
-			angle: 0,
-			speed: 0.01,
-			x: 450,
-			y: 100,
-			pinned: true
-		};
+		speed = 0.1;
 
-	points.push({
-		x: 100,
-		y: 100,
-		oldx: 100 + Math.random() * 50 - 25,
-		oldy: 100 + Math.random() * 50 - 25
-	});
 	points.push({
 		x: 200,
 		y: 100,
 		oldx: 200,
+		oldy: 100,
+        main:true,
+        r:50
+	});
+	points.push({
+		x: 250,
+		y: 100,
+		oldx: 250,
 		oldy: 100
 	});
 	points.push({
-		x: 200,
-		y: 200,
-		oldx: 200,
-		oldy: 200
-	});
-	points.push({
-		x: 100,
-		y: 200,
-		oldx: 100,
-		oldy: 200
-	});
-
-	points.push({
-		x: 400,
+		x: 300,
 		y: 100,
-		oldx: 400,
-		oldy: 100,
+		oldx: 300,
+		oldy: 100
 	});
 	points.push({
 		x: 350,
@@ -61,31 +39,12 @@ window.onload = function() {
 		oldx: 350,
 		oldy: 100
 	});
-    points.push({
-		x: 300,
+	points.push({
+		x: 400,
 		y: 100,
-		oldx: 300,
-		oldy: 100
-	});
-    points.push({
-		x: 250,
-		y: 100,
-		oldx: 250,
-		oldy: 100
-	});
-    points.push({
-		x: 200,
-		y: 100,
-		oldx: 200,
-		oldy: 100
-	});
-    points.push({
-		x: 150,
-		y: 100,
-		oldx: 150,
+		oldx: 400,
 		oldy: 100,
-        main:true,
-        r:50
+        pinned:true
 	});
 
 	sticks.push({
@@ -93,63 +52,21 @@ window.onload = function() {
 		p1: points[1],
 		length: distance(points[0], points[1])
 	});
-	sticks.push({
+    sticks.push({
 		p0: points[1],
 		p1: points[2],
 		length: distance(points[1], points[2])
 	});
-	sticks.push({
+    sticks.push({
 		p0: points[2],
 		p1: points[3],
 		length: distance(points[2], points[3])
 	});
-	sticks.push({
+    sticks.push({
 		p0: points[3],
-		p1: points[0],
-		length: distance(points[3], points[0])
-	});
-	sticks.push({
-		p0: points[0],
-		p1: points[2],
-		length: distance(points[0], points[2]),
-		hidden: true
-	});
-
-	sticks.push({
-		p0: engine,
 		p1: points[4],
-		length: distance(engine, points[4])
+		length: distance(points[3], points[4])
 	});
-	sticks.push({
-		p0: points[4],
-		p1: points[5],
-		length: distance(points[4], points[5])
-	});
-    sticks.push({
-		p0: points[6],
-		p1: points[5],
-		length: distance(points[6], points[5])
-	});
-    sticks.push({
-		p0: points[6],
-		p1: points[7],
-		length: distance(points[6], points[7])
-	});
-    sticks.push({
-		p0: points[8],
-		p1: points[7],
-		length: distance(points[8], points[7])
-	});
-    sticks.push({
-		p0: points[8],
-		p1: points[9],
-		length: distance(points[8], points[9])
-	});
-	// sticks.push({
-	// 	p0: points[9],
-	// 	p1: points[0],
-	// 	length: distance(points[9], points[0])
-	// });
 
 	function distance(p0, p1) {
 		var dx = p1.x - p0.x,
@@ -160,7 +77,6 @@ window.onload = function() {
 	update();
 
 	function update() {
-		//updateEngine();
 		updatePoints();
 		for(var i = 0; i < 5; i++) {
 			updateSticks();
@@ -169,14 +85,7 @@ window.onload = function() {
 		context.clearRect(0, 0, width, height);
 		renderPoints();
 		renderSticks();
-		//renderEngine();
 		requestAnimationFrame(update);
-	}
-
-	function updateEngine() {
-		engine.x = engine.baseX + Math.cos(engine.angle) * engine.range;
-		engine.y = engine.baseY + Math.sin(engine.angle) * engine.range;
-		engine.angle += engine.speed;
 	}
 
 	function updatePoints() {
@@ -246,11 +155,11 @@ window.onload = function() {
 	function renderPoints() {
 		for(var i = 0; i < points.length; i++) {
 			var p = points[i];
-            if(p.main){
+             if(p.main){
                 context.beginPath();
                 context.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                 context.fill();
-            }
+             }
 		}
 	}
 
@@ -267,16 +176,8 @@ window.onload = function() {
 			}
 		}
 	}
-	function renderEngine() {
-		context.beginPath();
-		context.arc(engine.baseX, engine.baseY, engine.range, 0, Math.PI * 2);
-		context.stroke();
-		context.beginPath();
-		context.arc(engine.x, engine.y, 5, 0, Math.PI * 2);
-		context.fill();
-	}
-
-	// document.body.addEventListener("click", function(event) {
-	// 	points[4].pinned = !points[4].pinned;
-	// });
+	document.body.addEventListener("click", function(event) {
+		// points[4].pinned = !points[4].pinned;
+        sticks=[]
+	});
 };
