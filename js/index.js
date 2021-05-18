@@ -1,183 +1,98 @@
+import Rope from './Rope.js';
 
 window.onload = function() {
-	var canvas = document.getElementById("canvas"),
-		context = canvas.getContext("2d"),
-		width = canvas.width = window.innerWidth,
-		height = canvas.height = window.innerHeight;
 
-	var points = [],
-		sticks = [],
-		bounce = 0.9,
-		gravity = 0.7,
-		friction = 0.999,
-		angle = 0,
-		speed = 0.1;
+	// points.push({
+	// 	x: 200,
+	// 	y: 100,
+	// 	oldx: 200,
+	// 	oldy: 100,
+    //     main:true,
+    //     r:25
+	// });
 
-	points.push({
-		x: 200,
-		y: 100,
-		oldx: 200,
-		oldy: 100,
-        main:true,
-        r:50
-	});
-	points.push({
-		x: 250,
-		y: 100,
-		oldx: 250,
-		oldy: 100
-	});
-	points.push({
-		x: 300,
-		y: 100,
-		oldx: 300,
-		oldy: 100
-	});
-	points.push({
-		x: 350,
-		y: 100,
-		oldx: 350,
-		oldy: 100
-	});
-	points.push({
-		x: 400,
-		y: 100,
-		oldx: 400,
-		oldy: 100,
-        pinned:true
-	});
-
-	sticks.push({
-		p0: points[0],
-		p1: points[1],
-		length: distance(points[0], points[1])
-	});
-    sticks.push({
-		p0: points[1],
-		p1: points[2],
-		length: distance(points[1], points[2])
-	});
-    sticks.push({
-		p0: points[2],
-		p1: points[3],
-		length: distance(points[2], points[3])
-	});
-    sticks.push({
-		p0: points[3],
-		p1: points[4],
-		length: distance(points[3], points[4])
-	});
-
-	function distance(p0, p1) {
-		var dx = p1.x - p0.x,
-			dy = p1.y - p0.y;
-		return Math.sqrt(dx * dx + dy * dy);
-	}
-
+	let newr
+	let coord = {x:0 , y:0}; 
+	let paint = false;
+	let rope = new Rope({x:100,y:100},{x:500,y:100},true,false,false);
+	let rope1 = new Rope({x:200,y:100},{x:400,y:100},true,false,false);
+	rope1.genRopes();
+	rope.genRopes();
+	//joinRope(rope,rope1)
 	update();
 
 	function update() {
-		updatePoints();
-		for(var i = 0; i < 5; i++) {
-			updateSticks();
-			constrainPoints();
-		}
-		context.clearRect(0, 0, width, height);
-		renderPoints();
-		renderSticks();
+		//ctx.clearRect(0, 0, width, height);
+		rope.update();
+		rope1.update();
+		//newr.update()
 		requestAnimationFrame(update);
 	}
-
-	function updatePoints() {
-		for(var i = 0; i < points.length; i++) {
-			var p = points[i];
-			if(!p.pinned) {
-				var vx = (p.x - p.oldx) * friction,
-					vy = (p.y - p.oldy) * friction;
-
-				p.oldx = p.x;
-				p.oldy = p.y;
-				p.x += vx;
-				p.y += vy;
-				p.y += gravity;
-			}
-		}
-	}
-	function constrainPoints() {
-		for(var i = 0; i < points.length; i++) {
-			var p = points[i];
-			if(!p.pinned) {
-				var vx = (p.x - p.oldx) * friction,
-					vy = (p.y - p.oldy) * friction;
-
-				if(p.x > width) {
-					p.x = width;
-					p.oldx = p.x + vx * bounce;
-				}
-				else if(p.x < 0) {
-					p.x = 0;
-					p.oldx = p.x + vx * bounce;
-				}
-				if(p.y > height) {
-					p.y = height;
-					p.oldy = p.y + vy * bounce;
-				}
-				else if(p.y < 0) {
-					p.y = 0;
-					p.oldy = p.y + vy * bounce;
-				}
-			}
-		}
-	}
-
-	function updateSticks() {
-		for(var i = 0; i < sticks.length; i++) {
-			var s = sticks[i],
-				dx = s.p1.x - s.p0.x,
-				dy = s.p1.y - s.p0.y,
-				distance = Math.sqrt(dx * dx + dy * dy),
-				difference = s.length - distance,
-				percent = difference / distance / 2,
-				offsetX = dx * percent,
-				offsetY = dy * percent;
-
-			if(!s.p0.pinned) {
-				s.p0.x -= offsetX;
-				s.p0.y -= offsetY;
-			}
-			if(!s.p1.pinned) {
-				s.p1.x += offsetX;
-				s.p1.y += offsetY;
-			}
-		}
+	function joinRope(rope1,rope2){
+		let joint = {p0:rope1.points[0],p1:rope2.points[0],
+			length:distance (rope1.points[0],rope2.points[0])}
+		let newpoints = rope1.points.concat(rope2.points)
+		let newsticks = rope1.sticks.concat(rope2.sticks,joint)
+		newr = new Rope (
+			0,0,false,newpoints,newsticks
+		)
 	}
 
 	function renderPoints() {
+        var image = new Image();
+        image.src = './assets/candy.png'
 		for(var i = 0; i < points.length; i++) {
 			var p = points[i];
              if(p.main){
-                context.beginPath();
-                context.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-                context.fill();
+                 ctx.drawImage(image,
+                    p.x-p.r,p.y-p.r,2*p.r,2*p.r
+                    )
              }
 		}
 	}
 
-	function renderSticks() {
-		for(var i = 0; i < sticks.length; i++) {
-			var s = sticks[i];
-			if(!s.hidden) {
-				context.beginPath();
-				context.strokeStyle = s.color ? s.color : "black";
-				context.lineWidth = s.width ? s.width : 1;
-				context.moveTo(s.p0.x, s.p0.y);
-				context.lineTo(s.p1.x, s.p1.y);
-				context.stroke();
-			}
-		}
-	}
-	document.body.addEventListener("click", function(event) {
-		// points[4].pinned = !points[4].pinned;
-        sticks=[]
-	});
+    function nextCircle(){
+        ctx.beginPath();
+        ctx.arc(400, 600, 70, 0, Math.PI * 2);
+        ctx.stroke();
+    }
+    function circleCollision(c1){
+        var circle1 = {radius: 25, x: c1.x, y: c1.y};
+        var circle2 = {radius: 70, x: 400, y:600};
+
+        var dx = circle1.x - circle2.x;
+        var dy = circle1.y - circle2.y;
+        var distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < circle1.radius + circle2.radius) {
+           console.log('collision')
+
+    }}
+	function startPainting(event){
+		paint = true;
+		getPosition(event);
+	  }
+	  function stopPainting(){
+		paint = false;
+	  }
+		 
+	function getPosition(event){
+		coord.x = event.clientX - canvas.offsetLeft;
+		coord.y = event.clientY - canvas.offsetTop;
+	  }
+
+	function sketch(event){
+		if (!paint) return;
+		ctx.beginPath();
+		ctx.lineWidth = 5;
+		ctx.lineCap = 'round';
+		ctx.strokeStyle = 'green';
+		ctx.moveTo(coord.x, coord.y);
+		getPosition(event);
+		ctx.lineTo(coord.x , coord.y);
+		ctx.stroke();
+	  }
+	  document.addEventListener('mousedown', startPainting);
+	  document.addEventListener('mouseup', stopPainting);
+	  document.addEventListener('mousemove', sketch);
 };
