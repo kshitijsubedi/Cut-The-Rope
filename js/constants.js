@@ -1,5 +1,5 @@
 var bounce = 0.5,
-    gravity = 0.8,
+    gravity = 0.1,
     friction = 0.999,
     ropeStep = 20,
     candyRadius=25,
