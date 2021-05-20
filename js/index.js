@@ -2,53 +2,34 @@ import Rope from './Rope.js';
 
 window.onload = function() {
 
-	// points.push({
-	// 	x: 200,
-	// 	y: 100,
-	// 	oldx: 200,
-	// 	oldy: 100,
-    //     main:true,
-    //     r:25
-	// });
-
 	let newr
 	let coord = {x:0 , y:0}; 
 	let paint = false;
-	let rope = new Rope({x:100,y:100},{x:500,y:100},true,false,false);
-	let rope1 = new Rope({x:200,y:100},{x:400,y:100},true,false,false);
+	let rope = new Rope({x:100,y:100},{x:200,y:100},{pin:true,color:'red',candy:true});
+	let rope1 = new Rope({x:100,y:100},{x:400,y:100},{pin:true,color:'blue'});
+	let rope2 = new Rope({x:100,y:100},{x:300,y:400},{pin:true})
 	rope1.genRopes();
 	rope.genRopes();
-	//joinRope(rope,rope1)
+	rope2.genRopes();
+	joinRope(rope,rope1,rope2)
 	update();
 
 	function update() {
-		//ctx.clearRect(0, 0, width, height);
-		rope.update();
-		rope1.update();
-		//newr.update()
+		ctx.clearRect(0, 0, width, height);
+		//rope.update()
+		//rope1.update()
+		newr.update()
 		requestAnimationFrame(update);
 	}
-	function joinRope(rope1,rope2){
-		let joint = {p0:rope1.points[0],p1:rope2.points[0],
-			length:distance (rope1.points[0],rope2.points[0])}
-		let newpoints = rope1.points.concat(rope2.points)
-		let newsticks = rope1.sticks.concat(rope2.sticks,joint)
+	function joinRope(rope1,rope2,rope3){
+		rope2.points[0] = rope1.points[0]
+		rope3.points[0] = rope1.points[0]
+		let y = [...rope1.points]
+		let newpoints = y.concat(rope2.points,rope3.points)
 		newr = new Rope (
-			0,0,false,newpoints,newsticks
-		)
-	}
-
-	function renderPoints() {
-        var image = new Image();
-        image.src = './assets/candy.png'
-		for(var i = 0; i < points.length; i++) {
-			var p = points[i];
-             if(p.main){
-                 ctx.drawImage(image,
-                    p.x-p.r,p.y-p.r,2*p.r,2*p.r
-                    )
-             }
-		}
+			0,0,{},newpoints
+			)
+		newr.genRopes();
 	}
 
     function nextCircle(){
@@ -92,7 +73,12 @@ window.onload = function() {
 		ctx.lineTo(coord.x , coord.y);
 		ctx.stroke();
 	  }
-	  document.addEventListener('mousedown', startPainting);
-	  document.addEventListener('mouseup', stopPainting);
-	  document.addEventListener('mousemove', sketch);
+	function mouseclick(){
+		ctx.clearRect(0, 0, width, height);
+		newr.update();
+	}
+	//   document.addEventListener('mousedown', startPainting);
+	//   document.addEventListener('mouseup', stopPainting);
+	//   document.addEventListener('mousemove', sketch);
+	document.addEventListener('click',mouseclick);
 };

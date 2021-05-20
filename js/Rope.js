@@ -1,31 +1,40 @@
 
 export default class Rope{
 		
-    constructor(orig,dest,pin,points,sticks){
+    constructor(orig,dest,options,points){
         this.orig=orig
         this.dest = dest
         this.points=points?points:[]
-        this.sticks=sticks?sticks:[]
-        this.pin=pin
+        this.sticks=[]
+        this.pin=options.pin
+        this.candy=options.candy
+        this.color=options.color
     }
     genRopes() {
-            let step= (this.dest.x-this.orig.x)/ropeStep;
-            for(var i=0;i<Math.abs(step+1);i++){
-                this.points.push({
-                x:this.orig.x+Math.sign(this.dest.x-this.orig.x)*i*ropeStep,
-                y:this.orig.y,
-                oldx:this.orig.x+Math.sign(this.dest.x-this.orig.x)*i*ropeStep,
-                oldy:this.orig.y,
-                pinned:i==step?this.pin?true:false:false
-            })
+            let step= Math.abs(this.dest.x-this.orig.x)/ropeStep;
+            if(this.points.length ==0){
+                for(var i=0;i<step+1;i++){
+                    this.points.push({
+                        x:this.orig.x+Math.sign(this.dest.x-this.orig.x)*i*ropeStep,
+                        y:this.orig.y,
+                        oldx:this.orig.x+Math.sign(this.dest.x-this.orig.x)*i*ropeStep,
+                        oldy:this.orig.y,
+                        pinned:i==step?this.pin?true:false:false,
+                        main :i==0?this.candy?true:false:false
+                    })
+                }
+            }
+        for (var i=0;i<this.points.length-1;i++){
+            let dist = distance(this.points[i],this.points[i+1])
+            if (dist <= ropeStep){
+                this.sticks.push({
+                    p0:this.points[i],
+                    p1:this.points[i+1],
+                    length:dist
+                })
+            }
         }
-        for (var i=0;i<step;i++){
-            this.sticks.push({
-                p0:this.points[i],
-                p1:this.points[i+1],
-                length:distance(this.points[i],this.points[i+1])
-            })
-        }
+        console.log(this.sticks)
     }
 
     updatePoints() {
@@ -41,9 +50,9 @@ export default class Rope{
                 p.y += vy;
                 p.y += gravity;
             }
-            if (p.main){
-                circleCollision(p)
-            }
+            // if (p.main){
+            //     circleCollision(p)
+            // }
         }
     }
     constrainPoints() {
@@ -99,7 +108,7 @@ export default class Rope{
             var s = this.sticks[i];
             if(!s.hidden) {
                 ctx.beginPath();
-                ctx.strokeStyle = s.color ? s.color : "black";
+                ctx.strokeStyle = this.color;
                 ctx.lineWidth = s.width ? s.width : 2;
                 ctx.moveTo(s.p0.x, s.p0.y);
                 ctx.lineTo(s.p1.x, s.p1.y);
@@ -107,12 +116,30 @@ export default class Rope{
             }
         }
         }
+    renderCandy() {
+            var image = new Image();
+            image.src = './assets/candy.png'
+            for(var i = 0; i < this.points.length; i++) {
+                var p = this.points[i];
+                 if(p.main){
+                     ctx.drawImage(image,
+                        p.x-candyRadius,p.y-candyRadius,2*candyRadius,2*candyRadius
+                        )
+                 }
+                 else {
+                    ctx.beginPath();
+                    ctx.arc(p.x,p.y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                 }
+            }
+        }
     update (){
         this.updatePoints();
         for(var i = 0; i < 5; i++) {
             this.updateSticks();
             this.constrainPoints();
         }
+        this.renderCandy();
         this.renderRopes();
     }
 }
