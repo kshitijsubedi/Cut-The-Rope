@@ -1,7 +1,7 @@
 var bounce = 0.5,
     gravity = 0.1,
     friction = 0.999,
-    ropeStep = 20,
+    ropeStep = 15,
     candyRadius=25,
     angle = 0,
     speed = 0.1;

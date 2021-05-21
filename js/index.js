@@ -56,7 +56,7 @@ window.onload = function () {
 		newr = new RRope('','','',{})
 		newr.points = newpoints;
 		newr.sticks = newsticks;
-		console.log(newr.points)
+		console.log(newr.sticks)
 	}
  
     function nextCircle() {
@@ -105,7 +105,7 @@ window.onload = function () {
     }
 
     function mouseclick() {
-        
+        newr.sticks.splice(0,5)
     }
     //   document.addEventListener('mousedown', startPainting);
     //   document.addEventListener('mouseup', stopPainting);
