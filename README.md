@@ -1,6 +1,7 @@
-# LeapfrogInternship
+# JS Game
 
-- Vanilla JS Image Slider
+- Vanilla JS 
+	Cut The Rope
 
 ### Deployed here :
 https://kshitijsubedi.github.io/JS-Image-Carousel/
