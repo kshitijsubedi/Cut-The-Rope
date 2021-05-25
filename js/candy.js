@@ -1,4 +1,4 @@
-export default class Candy {
+class Candy {
   constructor(point) {
       this.x = point?point.x:0
       this.y= point?point.y:0
