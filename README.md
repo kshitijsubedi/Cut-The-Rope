@@ -4,4 +4,4 @@
 	Cut The Rope
 
 ### Deployed here :
-https://kshitijsubedi.github.io/JS-Image-Carousel/
+https://kshitijsubedi.github.io/Cut-The-Rope/
