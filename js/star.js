@@ -16,7 +16,7 @@ class Star {
     this.numOfRows = 18;
     this.animationTime = 45;
 
-    //this.sounds = [star1Sound, star2Sound, star3Sound];
+    this.sounds = [star1Sound, star2Sound, star3Sound];
 
     this.loadStarImage();
     this.animateStar();

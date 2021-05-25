@@ -4,23 +4,25 @@ window.onload = function() {
     let coord = { x: 0, y: 0 };
     let paint = false;
     let ropes = []
-    let candyPos = { x: 200, y: 200 }
-    ropes.push(new Rope({ x: 100, y: 200 }, { x: candyPos.x, y: candyPos.y },
+    let candyPos = { x: width/2.2, y: height/3 }
+    ropes.push(new Rope({ x: width/2, y: height/5 }, { x: candyPos.x, y: candyPos.y },
         10, { pin: true, color: "red", candy: true }
     ))
-    ropes.push(
-        new Rope({ x: 300, y: 100 }, { x: candyPos.x, y: candyPos.y },
-            15, { pin: true, color: "blue" }
-        )
-    )
+//    ropes.push(
+//         new Rope({ x: 300, y: 100 }, { x: candyPos.x, y: candyPos.y },
+//             15, { pin: true, color: "blue" }
+//         )
+//     )
 
-    ropes.push(new Rope({ x: 250, y: 100 }, { x: candyPos.x, y: candyPos.y }, 10, { pin: true }));
+  //  ropes.push(new Rope({ x: 250, y: 100 }, { x: candyPos.x, y: candyPos.y }, 10, { pin: true }));
 
     ropes.forEach((rope) => {
         rope.genRopes()
     })
-    let frog = new Frog({x:width/2,y:height-150})
+    let frog = new Frog({x:width/2,y:height-120})
     let star = new Star({x:width/2,y:height/2},1)
+    let star1 = new Star({x:width/2,y:height/1.7},6)
+    let star2 = new Star({x:width/2,y:height/1.4},10)
     let bg = new Background()
     joinRopes()
     
@@ -33,6 +35,8 @@ window.onload = function() {
         frog.drawFrogImage()
         newr.update()
         star.update()
+        star1.update()
+        star2.update()
         sketch()
         requestAnimationFrame(update);
     }
@@ -90,8 +94,6 @@ window.onload = function() {
     }
 
     function getPosition(evt) {
-        // coord.x = event.clientX - canvas.offsetLeft;
-        // coord.y = event.clientY - canvas.offsetTop;
         var rect = canvas.getBoundingClientRect();
          coord.x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width
         coord.y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
@@ -110,7 +112,7 @@ window.onload = function() {
     }
 
     function mouseclick() {
-        frog.setFrogStatus('sad')
+        star.starDisappearAnimation(true);
     }
     //   document.addEventListener('mousedown', startPainting);
     //   document.addEventListener('mouseup', stopPainting);

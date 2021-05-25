@@ -1,7 +1,7 @@
 class Frog {
   constructor(position) {
     this.position = position;
-    this.animationSpeed = 80;
+    this.animationSpeed = 75;
     this.frogSupportImage = new Image();
     this.image = this.frogImage = new Image();
     this.frogSad = new Image();

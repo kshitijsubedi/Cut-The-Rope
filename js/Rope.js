@@ -7,8 +7,8 @@ class Rope {
         this.sticks = [];
         this.pin = options.pin;
         this.candy = options.candy;
-        this.color = options.color;
         this.candyBall = new Candy();
+        this.pin = new Pin();
     }
     genRopes() {
         if (this.points.length == 0) {
@@ -54,6 +54,9 @@ class Rope {
                 p.x += vx;
                 p.y += vy;
                 p.y += gravity;
+            }else if(p.pinned){
+                this.pin.x=p.x;
+                this.pin.y = p.y;
             }
             if (p.main) {
                 this.candyBall.x = p.x;
@@ -112,8 +115,8 @@ class Rope {
             var s = this.sticks[i];
             if (!s.hidden) {
                 ctx.beginPath();
-                ctx.strokeStyle = this.color;
-                ctx.lineWidth = s.width ? s.width : 2;
+                ctx.strokeStyle = '#3D2718FF'
+                ctx.lineWidth = s.width ? s.width : 3;
                 ctx.moveTo(s.p0.x, s.p0.y);
                 ctx.lineTo(s.p1.x, s.p1.y);
                 ctx.stroke();
@@ -127,7 +130,9 @@ class Rope {
             this.updateSticks();
             this.constrainPoints();
         }
+        this.pin.renderPin();
         this.renderRopes();
+        this.pin.renderDot();
         this.candyBall.renderCandy();
     }
 }
