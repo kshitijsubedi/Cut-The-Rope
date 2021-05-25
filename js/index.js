@@ -1,3 +1,4 @@
+import Background from './background.js'
 window.onload = function() {
     let newr;
     let coord = { x: 0, y: 0 };
@@ -18,8 +19,9 @@ window.onload = function() {
     ropes.forEach((rope) => {
         rope.genRopes()
     })
-    let frog = new Frog({x:700,y:400})
-    let star = new Star({x:500,y:300},1)
+    let frog = new Frog({x:width/2,y:height-150})
+    let star = new Star({x:width/2,y:height/2},1)
+    let bg = new Background()
     joinRopes()
     
     backgroundSound.play()
@@ -27,6 +29,7 @@ window.onload = function() {
     
     function update() {
         ctx.clearRect(0, 0, width, height);
+        bg.draw()
         frog.drawFrogImage()
         newr.update()
         star.update()
@@ -112,5 +115,5 @@ window.onload = function() {
     //   document.addEventListener('mousedown', startPainting);
     //   document.addEventListener('mouseup', stopPainting);
     //   document.addEventListener('mousemove', sketch);
-    document.addEventListener("click", mouseclick);
+    // document.addEventListener("click", mouseclick);
 };

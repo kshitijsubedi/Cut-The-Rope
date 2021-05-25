@@ -1,13 +1,11 @@
-class Background {
-    constructor(position, source) {
-      this.x = position.x;
-      this.y = position.y;
+export default class Background {
+    constructor() {
       this.backgroundImage = new Image();
-      this.backgroundImage.src = './assets/background.png';
+      this.backgroundImage.src = './assets/backbg.png';
     }
   
     draw() {
       ctx.beginPath();
-      ctx.drawImage(this.backgroundImage, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctx.drawImage(this.backgroundImage, 0, 0, width,height);
     }
   }

@@ -6,9 +6,10 @@ var bounce = 0.5,
     angle = 0,
     speed = 0.1;
 
-const  width = window.innerWidth;
-const  height = window.innerHeight;
+const  width = document.documentElement.clientWidth;
+const  height = document.documentElement.clientHeight;
+
 var canvas = document.getElementById("canvas"),
 		ctx = canvas.getContext("2d");
-		canvas.height=height;
-		canvas.width=width;
+		canvas.height=height -10;
+		canvas.width=width-10;
