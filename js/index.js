@@ -1,121 +1,102 @@
-import Background from './background.js'
-window.onload = function() {
+import Background from "./background.js";
+window.onload = function () {
     let newr;
     let coord = { x: 0, y: 0 };
     let paint = false;
-    let ropes = []
-    let candyPos = { x: width/2.2, y: height/3 }
-    ropes.push(new Rope({ x: width/2, y: height/5 }, { x: candyPos.x, y: candyPos.y },
-        10, { pin: true, color: "red", candy: true }
-    ))
-//    ropes.push(
-//         new Rope({ x: 300, y: 100 }, { x: candyPos.x, y: candyPos.y },
-//             15, { pin: true, color: "blue" }
-//         )
-//     )
-
-  //  ropes.push(new Rope({ x: 250, y: 100 }, { x: candyPos.x, y: candyPos.y }, 10, { pin: true }));
-
+    let ropes = [];
+    let candyPos = { x: width / 2.2, y: height / 3 };
+    ropes.push(
+        new Rope(
+            { x: width / 2, y: height / 5 },
+            { x: candyPos.x, y: candyPos.y },
+            10,
+            { pin: true, color: "red", candy: true }
+        )
+    );
     ropes.forEach((rope) => {
-        rope.genRopes()
-    })
-    let frog = new Frog({x:width/2,y:height-120})
-    let star = new Star({x:width/2,y:height/2},1)
-    let star1 = new Star({x:width/2,y:height/1.7},6)
-    let star2 = new Star({x:width/2,y:height/1.4},10)
-    let bg = new Background()
-    joinRopes()
-    
-    backgroundSound.play()
+        rope.genRopes();
+    });
+    let frog = new Frog({ x: width / 2, y: height - 120 });
+    let star = new Star({ x: width / 2, y: height / 2 }, 1);
+    let star1 = new Star({ x: width / 2, y: height / 1.7 }, 6);
+    let star2 = new Star({ x: width / 2, y: height / 1.4 }, 10);
+    let bg = new Background();
+    joinRopes();
+
+    backgroundSound.play();
     update();
-    
+
     function update() {
         ctx.clearRect(0, 0, width, height);
-        bg.draw()
-        frog.drawFrogImage()
-        newr.update()
-        star.update()
-        star1.update()
-        star2.update()
-        sketch()
+        bg.draw();
+        frog.drawFrogImage();
+        newr.update();
+        star.update();
+        star1.update();
+        star2.update();
+        draw();
         requestAnimationFrame(update);
     }
 
     function joinRopes() {
         let newpoints = ropes[0].points;
-        let newsticks = ropes[0].sticks; 
+        let newsticks = ropes[0].sticks;
         let joint = ropes[0].points[ropes[0].points.length - 1];
         ropes.forEach((rope, index) => {
             if (index > 0) {
-                newpoints = [...newpoints, ...rope.points]
-                newsticks = [...newsticks, ...rope.sticks]
-                let len = { p: rope.points.length, s: rope.sticks.length }
+                newpoints = [...newpoints, ...rope.points];
+                newsticks = [...newsticks, ...rope.sticks];
+                let len = { p: rope.points.length, s: rope.sticks.length };
                 newsticks.push({
                     p0: joint,
                     p1: rope.points[len.s],
-                    length: ropeStep
-                })
+                    length: ropeStep,
+                });
             }
-        })
-        newr = new Rope('', '', '', {})
+        });
+        newr = new Rope("", "", "", { candy: true });
         newr.points = newpoints;
         newr.sticks = newsticks;
     }
-
-    function nextCircle() {
-        ctx.beginPath();
-        ctx.arc(400, 600, 70, 0, Math.PI * 2);
-        ctx.stroke();
-    }
-
-    function circleCollision(c1) {
-        var circle1 = { radius: 25, x: c1.x, y: c1.y };
-        var circle2 = { radius: 70, x: 400, y: 600 };
-
-        var dx = circle1.x - circle2.x;
-        var dy = circle1.y - circle2.y;
-        var distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < circle1.radius + circle2.radius) {
-            console.log("collision");
+    function isIntersecting() {
+        let p1 = { x: coord.x, y: coord.y },
+            p2 = { x: coord.ex, y: coord.ey },
+            p3 = newr.points[0],
+            p4 = newr.points[10];
+        function CCW(p1, p2, p3) {
+            return (
+                (p3.y - p1.y) * (p2.x - p1.x) > (p2.y - p1.y) * (p3.x - p1.x)
+            );
         }
-    }
-    function drawMouse(){
-        sketch()
-    }
-
-    function startPainting(event) {
-        paint = true;
-        getPosition(event);
+        return (
+            CCW(p1, p3, p4) != CCW(p2, p3, p4) &&
+            CCW(p1, p2, p3) != CCW(p1, p2, p4)
+        );
     }
 
-    function stopPainting() {
-        paint = false;
-    }
-
-    function getPosition(evt) {
-        var rect = canvas.getBoundingClientRect();
-         coord.x = (evt.clientX - rect.left) / (rect.right - rect.left) * canvas.width
-        coord.y = (evt.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height
-    }
-
-    function sketch(event) {
+    function draw() {
         if (!paint) return;
         ctx.beginPath();
-        ctx.lineWidth = 5;
-        ctx.lineCap = "round";
-        ctx.strokeStyle = "green";
-        ctx.moveTo(coord.x, coord.y);
-        getPosition(event);
+        ctx.strokeStyle = "rgb(255,255,220,0.5)";
+        ctx.lineWidth = 4;
+        ctx.moveTo(coord.ex, coord.ey);
         ctx.lineTo(coord.x, coord.y);
         ctx.stroke();
     }
 
-    function mouseclick() {
-        star.starDisappearAnimation(true);
-    }
-    //   document.addEventListener('mousedown', startPainting);
-    //   document.addEventListener('mouseup', stopPainting);
-    //   document.addEventListener('mousemove', sketch);
-    // document.addEventListener("click", mouseclick);
+    document.addEventListener("mousemove", (e) => {
+        coord.x = e.clientX;
+        coord.y = e.clientY;
+    });
+    document.addEventListener("mousedown", (e) => {
+        paint = true;
+        coord.ex = e.clientX;
+        coord.ey = e.clientY;
+    });
+    document.addEventListener("mouseup", (e) => {
+        paint = false;
+        if (isIntersecting()) {
+            newr.sticks = [];
+        }
+    });
 };

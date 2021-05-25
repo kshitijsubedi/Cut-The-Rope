@@ -1,14 +1,14 @@
 class Rope {
     constructor(orig, dest, segment, options, points) {
         this.orig = orig;
-        this.dest = dest
+        this.dest = dest;
         this.segment = segment;
         this.points = points ? points : [];
         this.sticks = [];
         this.pin = options.pin;
-        this.candy = options.candy;
-        this.candyBall = new Candy();
+        this.candy = options.candy || false;
         this.pin = new Pin();
+        this.candyBall = this.candy ? new Candy() : false;
     }
     genRopes() {
         if (this.points.length == 0) {
@@ -20,8 +20,9 @@ class Rope {
                     y: this.orig.y + stepY * i,
                     oldx: this.orig.x + i * stepX,
                     oldy: this.orig.y + i * stepY,
-                    pinned: (i == 0) ? (this.pin ? true : false) : false,
-                    main: (i == this.segment) ? (this.candy ? true : false) : false,
+                    pinned: i == 0 ? (this.pin ? true : false) : false,
+                    main:
+                        i == this.segment ? (this.candy ? true : false) : false,
                 });
             }
         }
@@ -41,7 +42,6 @@ class Rope {
         return this.points[this.points.length - 1];
     }
 
-
     updatePoints() {
         for (var i = 0; i < this.points.length; i++) {
             var p = this.points[i];
@@ -54,8 +54,8 @@ class Rope {
                 p.x += vx;
                 p.y += vy;
                 p.y += gravity;
-            }else if(p.pinned){
-                this.pin.x=p.x;
+            } else if (p.pinned) {
+                this.pin.x = p.x;
                 this.pin.y = p.y;
             }
             if (p.main) {
@@ -115,7 +115,7 @@ class Rope {
             var s = this.sticks[i];
             if (!s.hidden) {
                 ctx.beginPath();
-                ctx.strokeStyle = '#3D2718FF'
+                ctx.strokeStyle = "#3D2718FF";
                 ctx.lineWidth = s.width ? s.width : 3;
                 ctx.moveTo(s.p0.x, s.p0.y);
                 ctx.lineTo(s.p1.x, s.p1.y);
@@ -133,6 +133,6 @@ class Rope {
         this.pin.renderPin();
         this.renderRopes();
         this.pin.renderDot();
-        this.candyBall.renderCandy();
+        if (this.candy) this.candyBall.renderCandy();
     }
 }
