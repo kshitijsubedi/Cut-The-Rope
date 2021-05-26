@@ -22,7 +22,7 @@ window.onload = function () {
     let star1 = new Star({ x: width / 2, y: height / 1.7 }, 6);
     let star2 = new Star({ x: width / 2, y: height / 1.4 }, 10);
     let bg = new Background();
-    let ms = new MainScreen();
+
     joinRopes();
 
     //backgroundSound.play();
@@ -31,7 +31,6 @@ window.onload = function () {
     function update() {
         ctx.clearRect(0, 0, width, height);
         bg.draw();
-        //ms.update();
         // frog.drawFrogImage();
         // newr.update();
         // star.update();
@@ -87,19 +86,22 @@ window.onload = function () {
         ctx.stroke();
     }
 
-    document.addEventListener("mousemove", (e) => {
+    canvas.addEventListener("mousemove", (e) => {
         coord.x = e.clientX;
         coord.y = e.clientY;
     });
-    document.addEventListener("mousedown", (e) => {
+    canvas.addEventListener("mousedown", (e) => {
         paint = true;
         coord.ex = e.clientX;
         coord.ey = e.clientY;
     });
-    document.addEventListener("mouseup", (e) => {
+    canvas.addEventListener("mouseup", (e) => {
         paint = false;
         if (isIntersecting()) {
             newr.sticks = [];
         }
     });
+    canvas.addEventListener('click',()=>{
+       transition.bottomY==height?transition.close():transition.open()
+    })
 };

@@ -9,11 +9,13 @@ var bounce = 0.5,
 var music = true,
     stage = 'menu';
 
-
-const width = document.documentElement.clientWidth;
-const height = document.documentElement.clientHeight;
-
-var canvas = document.getElementById("canvas"),
+    
+    const width = document.documentElement.clientWidth;
+    const height = document.documentElement.clientHeight;
+    
+    var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d");
-canvas.height = height;
-canvas.width = width;
+    canvas.height = height;
+    canvas.width = width;
+    
+let transition = new Transition();

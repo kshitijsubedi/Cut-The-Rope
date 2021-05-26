@@ -10,14 +10,18 @@
     padding:auto;
     cursor: url(../assets/select.cur),auto;
 }
+#game {
+    position: relative;
+    overflow: hidden;
+}
 
 #menu {
     position: relative;
     background: url('../assets/startbg.jpg') no-repeat ;
-    background-size:100% 100%;
+    background-size: cover;
     height: 100vh;
 }
-
+ 
 #menu #title-image {
     background:url('../assets/title.png') no-repeat;
     background-size: contain;
@@ -30,12 +34,11 @@
 
 #menu #play-button {
     background: url('../assets/buttonNormal.png')no-repeat;
-    background-size: contain;
     position: absolute;
     top:66%;
-    left:40%;
-    height: 45%;
-    width: 20%;
+    left:37%;
+    height: 60px;
+    width: 292px;
     font-family: gooddp;
     color:#fff;
     font-size: 35px;
@@ -57,4 +60,54 @@
     position: absolute;
     height: 42px;
     width: 42px;
+    opacity: 0.8;
   }
+  #music-button:hover {
+      opacity: 1;
+  }
+
+  .credits {
+      font-size: 32px;
+      font-family: gooddp;
+      color:white;
+      position: absolute;
+      top: 10px;
+      right:10px
+  }
+#levels {
+    position: absolute;
+    top:20vh;
+    left:20vw;
+    height: 75vh;
+    width: 70vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+#levels .level {
+    height: 25%;
+    width: 128px;
+    margin-right:5vw;
+    margin-bottom: 7vh;
+    padding-top:45px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: 40px;
+    color: #fff;
+    font-family: gooddp;
+}
+
+#back-button {
+    position: absolute;
+    left:-15vw;
+    top:-15vh;
+    background:url('../assets/backNormal.png') no-repeat;
+    background-size: contain;
+    height:80px;
+    width: 80px;
+}
+#back-button:hover{
+    background:url('../assets/backHover.png') no-repeat;
+    background-size: contain;
+}
