@@ -6,6 +6,10 @@ var bounce = 0.5,
     angle = 0,
     speed = 0.1;
 
+var music = true,
+    stage = 'menu';
+
+
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight;
 

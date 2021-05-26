@@ -10,7 +10,16 @@
     <title>Cut The Rope</title>
 </head>
 <body>
-    <canvas id='canvas'></canvas>
+    <div class='game'>
+        <div id='menu'>
+            <div id='title-image'></div>
+            <div id='play-button'><h3>Play</h3></div>
+        </div>
+        <div id='music-button'></div>
+        <div class='levels'>
+        </div>
+        <canvas style="display:none" id='canvas'></canvas>
+    </div>
     <script src="./js/constants.js" ></script>
     <script src="./js/utils.js" ></script>
     <script src="./js/frog.js" ></script>
@@ -19,6 +28,7 @@
     <script src="./js/candy.js" ></script>
     <script src="./js/star.js" ></script>
     <script src="./js/levels.js" ></script>
+    <script src="./js/mainScreen.js" ></script>
     <script src="./js/index.js" type='module'></script>
 </body>
 </html>

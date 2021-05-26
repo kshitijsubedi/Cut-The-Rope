@@ -1,4 +1,60 @@
+@font-face {
+    font-family: gooddp;
+    src: url('gooddp-webfont.woff2') format('woff2'),
+         url('gooddp-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
 #canvas {
     padding:auto;
     cursor: url(../assets/select.cur),auto;
 }
+
+#menu {
+    position: relative;
+    background: url('../assets/startbg.jpg') no-repeat ;
+    background-size:100% 100%;
+    height: 100vh;
+}
+
+#menu #title-image {
+    background:url('../assets/title.png') no-repeat;
+    background-size: contain;
+    position: absolute;
+    top:15%;
+    left:35%;
+    height: 45%;
+    width: 40%;
+}
+
+#menu #play-button {
+    background: url('../assets/buttonNormal.png')no-repeat;
+    background-size: contain;
+    position: absolute;
+    top:66%;
+    left:40%;
+    height: 45%;
+    width: 20%;
+    font-family: gooddp;
+    color:#fff;
+    font-size: 35px;
+    text-align: center;
+}
+#play-button h3 {
+    padding:10px;
+}
+
+#menu #play-button:hover {
+    background: url('../assets/buttonHover.png')no-repeat;
+}
+
+.rotate {
+    animation: rotation 2s infinite linear;
+  }
+
+  #music-button {
+    position: absolute;
+    height: 42px;
+    width: 42px;
+  }
