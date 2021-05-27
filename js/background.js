@@ -1,4 +1,4 @@
-export default class Background {
+class Background {
     constructor() {
         this.backgroundImage = new Image();
         this.backgroundImage.src = "./assets/backbg.png";

@@ -1,4 +1,3 @@
-
 class Game {
     constructor(level){
         this.pin = level.pins
@@ -12,25 +11,34 @@ class Game {
         this.isCutting = false
         this.mousePosition = {}
         this.joinRopes()
+        this.mouseEvent()
+        this.mainLoop()
     }
 
     draw(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         this.background.draw();
+        this.frog.drawFrogImage();
+        this.drawMouseSwipe();
     }
     update(){
-
+        this.mainRope.update();
+        for(let star of this.stars){
+            star.update()
+        }
     }
 
     mainLoop(){
-
+        this.animationFrame = requestAnimationFrame(this.mainLoop.bind(this));
+        this.draw();
+        this.update();
     }
 
     joinRopes() {
-        let newpoints = ropes[0].points;
-        let newsticks = ropes[0].sticks;
-        let joint = ropes[0].points[ropes[0].points.length - 1];
-        ropes.forEach((rope, index) => {
+        let newpoints = this.ropes[0].points;
+        let newsticks = this.ropes[0].sticks;
+        let joint = this.ropes[0].points[this.ropes[0].points.length - 1];
+        this.ropes.forEach((rope, index) => {
             if (index > 0) {
                 newpoints = [...newpoints, ...rope.points];
                 newsticks = [...newsticks, ...rope.sticks];
