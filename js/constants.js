@@ -9,10 +9,9 @@ var bounce = 0.5,
 var music = true,
     stage = 'menu';
 
-    
-    const width = document.documentElement.clientWidth;
-    const height = document.documentElement.clientHeight;
-    
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
     var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d");
     canvas.height = height;

@@ -14,29 +14,27 @@ window.onload = function () {
             { pin: true, color: "red", candy: true }
         )
     );
-    ropes.forEach((rope) => {
-        rope.genRopes();
-    });
+
     let frog = new Frog({ x: width / 2, y: height - 120 });
-    let star = new Star({ x: width / 2, y: height / 2 }, 1);
-    let star1 = new Star({ x: width / 2, y: height / 1.7 }, 6);
-    let star2 = new Star({ x: width / 2, y: height / 1.4 }, 10);
+    let star = new Star({ x: width / 2, y: height / 2 });
+    let star1 = new Star({ x: width / 2, y: height / 1.7 });
+    let star2 = new Star({ x: width / 2, y: height / 1.4 });
     let bg = new Background();
 
     joinRopes();
 
     //backgroundSound.play();
-    //update();
+    update();
 
     function update() {
         ctx.clearRect(0, 0, width, height);
         bg.draw();
-        // frog.drawFrogImage();
-        // newr.update();
-        // star.update();
-        // star1.update();
-        // star2.update();
-        // draw();
+        frog.drawFrogImage();
+        newr.update();
+        star.update();
+        star1.update();
+        star2.update();
+        draw();
         requestAnimationFrame(update);
     }
 
@@ -101,7 +99,4 @@ window.onload = function () {
             newr.sticks = [];
         }
     });
-    canvas.addEventListener('click',()=>{
-       transition.bottomY==height?transition.close():transition.open()
-    })
 };

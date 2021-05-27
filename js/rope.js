@@ -9,6 +9,7 @@ class Rope {
         this.candy = options.candy || false;
         this.pin = new Pin();
         this.candyBall = this.candy ? new Candy() : false;
+        this.genRopes()
     }
     genRopes() {
         if (this.points.length == 0) {

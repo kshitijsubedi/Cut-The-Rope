@@ -31,7 +31,7 @@ class Transition {
             if (this.topY >= 0) {
                 this.topY = 0;
                 this.bottomY = height / 2;
-                stage=destination
+                stage = destination;
                 clearInterval(intr);
             }
             this.animate();
@@ -44,7 +44,7 @@ class Transition {
             if (this.bottomY >= height) {
                 this.topY = -height / 2;
                 this.bottomY = height;
-                stage=destination
+                stage = destination;
                 clearInterval(intr);
             }
             this.animate();
