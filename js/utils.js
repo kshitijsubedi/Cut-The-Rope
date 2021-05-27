@@ -12,19 +12,20 @@ class Transition {
         this.bottomY = height;
         this.curtionTop = new Image();
         this.curtionBottom = new Image();
+        this.background = new Image();
+        this.background.src = './assets/bgr.jpg'
         this.curtionTop.src = "./assets/curtainTop.png";
         this.curtionBottom.src = "./assets/curtainBottom.png";
     }
 
     animate() {
         ctx.beginPath();
-        ctx.clearRect(0, 0, width, height);
+        ctx.drawImage(this.background,0, 0, width, height);
         ctx.drawImage(this.curtionTop, 0, this.topY, width, height / 2);
         ctx.drawImage(this.curtionBottom, 0, this.bottomY, width, height / 2);
     }
 
-    close(destination) {
-        console.log(destination)
+    async close(destination) {
         var intr = setInterval(() => {
             this.topY += this.step;
             this.bottomY -= this.step;
@@ -37,7 +38,7 @@ class Transition {
             this.animate();
         }, 50);
     }
-    open(destination) {
+    async open(destination) {
         var intr = setInterval(() => {
             this.topY -= this.step;
             this.bottomY += this.step;

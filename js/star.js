@@ -45,7 +45,7 @@ class Star {
     }
 
     starDisappearAnimation() {
-        this.setDisappearStatus(true);
+        this.hasDisappeared=true;
         this.starAnimationIndex = 0;
         this.starAnimationNumOfRows = 11;
         this.starAnimationSpriteWidth = this.starDisappearImage.width;
@@ -54,8 +54,8 @@ class Star {
             this.starAnimationSpriteHeight / this.starAnimationNumOfRows;
 
         if (!this.isDisappearing) {
-            this.sounds[newGame.inGameScore.getStarScore() - 1].currentTime = 0;
-            this.sounds[newGame.inGameScore.getStarScore() - 1].play();
+            //this.sounds[newGame.inGameScore.getStarScore() - 1].currentTime = 0;
+            //this.sounds[newGame.inGameScore.getStarScore() - 1].play();
             this.isDisappearing = true;
             this.starDisappear = setInterval(() => {
                 this.starAnimationIndex++;
@@ -90,10 +90,6 @@ class Star {
             );
             ctx.closePath();
         }
-    }
-
-    setDisappearStatus(value) {
-        this.hasDisappeared = value;
     }
 
     draw() {

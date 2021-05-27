@@ -4,9 +4,10 @@ let musicButton = document.getElementById("music-button");
 
 playButton.addEventListener("click", (e) => {
     stage = "level";
-    mainMenu.style.display = "none";
     canvas.style.display = "block";
     transition.close("levels");
+    mainMenu.style.display = "none";
+    levelScreen.style.removeProperty('display');
 });
 
 musicButton.style.background = `url('./assets/musicMute.png') no-repeat`;

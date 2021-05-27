@@ -1,15 +1,21 @@
 class Game {
     constructor(level){
-        this.pin = level.pins
+        this.pinPoints = level.pinPoints
         this.stars = level.stars
         this.frog= level.frog
-        this.ropes = level.ropes
         this.candy = level.candy
+        this.ropes=[]
         this.background = new Background()
         this.mainRope = new Rope("", "", "", { candy: true });
+        this.gameScore = new StarScore({x:150,y:100},this.stars)
         this.isGameOver =false
         this.isCutting = false
+        this.isCandyNearFrog = false;
+        this.isMouthOpen = false;
+        this.hasEaten = false;
+        this.isSad = false;
         this.mousePosition = {}
+        this.initRope(this.candy)
         this.joinRopes()
         this.mouseEvent()
         this.mainLoop()
@@ -20,18 +26,34 @@ class Game {
         this.background.draw();
         this.frog.drawFrogImage();
         this.drawMouseSwipe();
+        this.gameScore.drawGameStarScore('ingame');
     }
     update(){
+        this.candyNearFrogDetection();
+        if(this.hasEaten|| this.isSad){
+            this.mainRope.candy = false;
+        }
         this.mainRope.update();
         for(let star of this.stars){
             star.update()
+            this.starCollisionDetection(star);
+            star.drawDisappearStar();
         }
+        this.gameScore.updateStarScore();
     }
 
     mainLoop(){
         this.animationFrame = requestAnimationFrame(this.mainLoop.bind(this));
         this.draw();
         this.update();
+    }
+
+    initRope(candy){
+        this.pinPoints.forEach((point,index)=>{
+            this.ropes.push(new Rope ({x:point.x,y:point.y},{x:candy.x,y:candy.y},point.length,{
+                candy:index==0?true:false
+            }))
+        })
     }
 
     joinRopes() {
@@ -52,13 +74,14 @@ class Game {
         });
         this.mainRope.points = newpoints;
         this.mainRope.sticks = newsticks;
+        this.mainRope.generatePins();
     }
 
-    isRopeIntersecting() {
+    isRopeIntersecting(rope) {
         let p1 = { x: this.mousePosition.x, y: this.mousePosition.y },
             p2 = { x: this.mousePosition.ex, y: this.mousePosition.ey },
-            p3 = newr.points[0],
-            p4 = newr.points[10];
+            p3 = rope.points[0],
+            p4 = rope.points[rope.points.length-1];
         function CCW(p1, p2, p3) {
             return (
                 (p3.y - p1.y) * (p2.x - p1.x) > (p2.y - p1.y) * (p3.x - p1.x)
@@ -69,6 +92,14 @@ class Game {
             CCW(p1, p2, p3) != CCW(p1, p2, p4)
         );
     }
+    starCollisionDetection(star) {
+        if (this.mainRope.candyBall.x < star.position.x + star.spriteWidth &&
+          this.mainRope.candyBall.x + this.mainRope.candyBall.radius > star.position.x &&
+          this.mainRope.candyBall.y < star.position.y + star.singleSpriteHeight &&
+          this.mainRope.candyBall.y + this.mainRope.candyBall.radius > star.position.y) {
+          star.starDisappearAnimation();
+        }
+      }
 
     drawMouseSwipe() {
         if (!this.isCutting) return;
@@ -92,9 +123,55 @@ class Game {
         });
         canvas.addEventListener("mouseup", (e) => {
             this.isCutting = false;
-            // if (isIntersecting()) {
-            //     newr.sticks = [];
-            // }
+            if (this.isRopeIntersecting(this.ropes[0])) {
+                this.mainRope.sticks = [];
+            }
         });
     }
+    candyNearFrogDetection() {
+        if (!this.isCandyNearFrog) {
+          if (this.mainRope.candyBall.x < this.frog.position.x + this.frog.spriteWidth &&
+            this.mainRope.candyBall.x + this.mainRope.candyBall.radius > this.frog.position.x - nearFrogDistance &&
+            this.mainRope.candyBall.y < this.frog.position.y + this.frog.singleSpriteHeight &&
+            this.mainRope.candyBall.y + this.mainRope.candyBall.radius > this.frog.position.y - nearFrogDistance) {
+            this.isCandyNearFrog = true;
+            this.frog.setFrogStatus('mouthopen');
+            this.isMouthOpen = true;
+          }
+        }
+        if (this.isMouthOpen) {
+          if (!(this.mainRope.candyBall.x < this.frog.position.x + this.frog.spriteWidth &&
+            this.mainRope.candyBall.x + this.mainRope.candyBall.radius > this.frog.position.x - nearFrogDistance &&
+            this.mainRope.candyBall.y < this.frog.position.y + this.frog.singleSpriteHeight &&
+            this.mainRope.candyBall.y + this.mainRope.candyBall.radius > this.frog.position.y - nearFrogDistance)) {
+            this.isCandyNearFrog = false;
+            this.frog.setFrogStatus('mouthclose');
+            this.isMouthOpen = false;
+          }
+        }
+        if (!this.hasEaten) {
+          if (this.mainRope.candyBall.x < this.frog.position.x + this.frog.spriteWidth - frogEatDistance &&
+            this.mainRope.candyBall.x + this.mainRope.candyBall.radius > this.frog.position.x - frogEatDistance &&
+            this.mainRope.candyBall.y < this.frog.position.y + this.frog.singleSpriteHeight &&
+            this.mainRope.candyBall.y + this.mainRope.candyBall.radius > this.frog.position.y + frogEatDistance) {
+            this.hasEaten = true;
+            this.frog.setFrogStatus('chew');
+            this.candy.hasEaten = true;
+            this.isMouthOpen = false;
+            setTimeout(() => {
+              this.isGameOver = true;
+            }, this.frog.numOfRows * this.frog.animationSpeed);
+          }
+    
+          if (!this.isSad)
+            if (this.mainRope.candyBall.y > this.frog.position.y + this.frog.singleSpriteHeight / 2) {
+              this.frog.setFrogStatus('sad');
+              this.isSad = true;
+              setTimeout(() => {
+                this.isGameOver = true;
+              }, this.frog.numOfRows * this.frog.animationSpeed );
+            }
+        }
+    
+      }
 }

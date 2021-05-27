@@ -3,10 +3,14 @@ var bounce = 0.5,
     friction = 0.999,
     ropeStep = 15,
     candyRadius = 20,
+    nearFrogDistance = 70,
+    frogEatDistance = 20,
     angle = 0,
     speed = 0.1;
 
 var music = true,
+    currentLevel=1,
+    currentStar=0,
     stage = 'menu';
 
     const width = window.innerWidth;

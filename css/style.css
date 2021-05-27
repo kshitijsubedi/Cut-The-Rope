@@ -5,10 +5,13 @@
     font-weight: normal;
     font-style: normal;
 }
+body {
+    scrollbar-width: thin;
+    cursor: url(../assets/select.cur),auto;
+}
 
 #canvas {
     padding:auto;
-    cursor: url(../assets/select.cur),auto;
 }
 #game {
     position: relative;
@@ -76,13 +79,15 @@
   }
 #levels {
     position: absolute;
-    top:20vh;
-    left:20vw;
-    height: 75vh;
-    width: 70vw;
+    padding-top:20vh;
+    padding-left:20vw;
+    height: 95vh;
+    width: 95vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    overflow: hidden;
+    scrollbar-width: thin;
 }
 
 #levels .level {
@@ -100,8 +105,8 @@
 
 #back-button {
     position: absolute;
-    left:-15vw;
-    top:-15vh;
+    left:10vw;
+    top:10vh;
     background:url('../assets/backNormal.png') no-repeat;
     background-size: contain;
     height:80px;
@@ -110,4 +115,17 @@
 #back-button:hover{
     background:url('../assets/backHover.png') no-repeat;
     background-size: contain;
+}
+#restart-button {
+    position: absolute;
+    left:18%;
+    bottom:13%;
+    background:url('../assets/restart.png') no-repeat;
+    background-size: contain;
+    height:44px;
+    width: 44px;
+    opacity: 0.8;
+}
+#restart-button:hover {
+    opacity: 1;
 }
