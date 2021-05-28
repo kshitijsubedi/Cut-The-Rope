@@ -54,8 +54,7 @@ class Star {
             this.starAnimationSpriteHeight / this.starAnimationNumOfRows;
 
         if (!this.isDisappearing) {
-            //this.sounds[newGame.inGameScore.getStarScore() - 1].currentTime = 0;
-            //this.sounds[newGame.inGameScore.getStarScore() - 1].play();
+            this.sounds[game.gameScore.getStarScore() - 1].play();
             this.isDisappearing = true;
             this.starDisappear = setInterval(() => {
                 this.starAnimationIndex++;

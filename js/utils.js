@@ -25,20 +25,28 @@ class Transition {
         ctx.drawImage(this.curtionBottom, 0, this.bottomY, width, height / 2);
     }
 
-    async close(destination) {
-        var intr = setInterval(() => {
+    async close(destination,game) {
+       if(game) {
+         window.cancelAnimationFrame(game.animationFrame);
+           gameOverMenu.style.removeProperty('display');
+       }
+          // var intr = setInterval(() => {
             this.topY += this.step;
             this.bottomY -= this.step;
             if (this.topY >= 0) {
                 this.topY = 0;
                 this.bottomY = height / 2;
                 stage = destination;
-                clearInterval(intr);
-            }
+               // clearInterval(intr);
+           }
             this.animate();
-        }, 50);
+       // }, this.animationSpeed);
     }
-    async open(destination) {
+    async open(destination,game) {
+       if(game){
+        window.cancelAnimationFrame(game.animationFrame);
+        gameOverMenu.style.removeProperty('display');
+       }
         var intr = setInterval(() => {
             this.topY -= this.step;
             this.bottomY += this.step;
@@ -49,6 +57,6 @@ class Transition {
                 clearInterval(intr);
             }
             this.animate();
-        }, 50);
+        }, this.animationSpeed);
     }
 }

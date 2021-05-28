@@ -7,7 +7,7 @@ class Game {
         this.ropes=[]
         this.background = new Background()
         this.mainRope = new Rope("", "", "", { candy: true });
-        this.gameScore = new StarScore({x:150,y:100},this.stars)
+        this.gameScore = new StarScore({x:200,y:100},this.stars)
         this.isGameOver =false
         this.isCutting = false
         this.isCandyNearFrog = false;
@@ -23,6 +23,7 @@ class Game {
 
     draw(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        transition.open("levels");
         this.background.draw();
         this.frog.drawFrogImage();
         this.drawMouseSwipe();
@@ -41,11 +42,22 @@ class Game {
         }
         this.gameScore.updateStarScore();
     }
-
+    
     mainLoop(){
         this.animationFrame = requestAnimationFrame(this.mainLoop.bind(this));
-        this.draw();
-        this.update();
+        if(this.isGameOver){
+            if(this.isSad){
+                nextButton.style.display='none'
+            } else {
+                nextButton.style.removeProperty('display');
+            }
+            this.gameScore.loadGameOverScore()
+            transition.close('gameover',true)
+            this.gameScore.drawGameStarScore('gameover');
+        }else {
+            this.draw();
+            this.update();
+        }
     }
 
     initRope(candy){
@@ -77,11 +89,11 @@ class Game {
         this.mainRope.generatePins();
     }
 
-    isRopeIntersecting(rope) {
+    isRopeIntersecting(stick) {
         let p1 = { x: this.mousePosition.x, y: this.mousePosition.y },
             p2 = { x: this.mousePosition.ex, y: this.mousePosition.ey },
-            p3 = rope.points[0],
-            p4 = rope.points[rope.points.length-1];
+            p3 = stick.p0,
+            p4 = stick.p1;
         function CCW(p1, p2, p3) {
             return (
                 (p3.y - p1.y) * (p2.x - p1.x) > (p2.y - p1.y) * (p3.x - p1.x)
@@ -123,11 +135,18 @@ class Game {
         });
         canvas.addEventListener("mouseup", (e) => {
             this.isCutting = false;
-            if (this.isRopeIntersecting(this.ropes[0])) {
-                this.mainRope.sticks = [];
-            }
+            this.mainRope.sticks.forEach((stick,index)=>{
+                let ss = this.isRopeIntersecting(stick)
+                if (ss) this.removeStick(index)
+            })
         });
     }
+
+    removeStick(index){
+        
+        this.mainRope.sticks.splice(index,1)
+    }
+
     candyNearFrogDetection() {
         if (!this.isCandyNearFrog) {
           if (this.mainRope.candyBall.x < this.frog.position.x + this.frog.spriteWidth &&

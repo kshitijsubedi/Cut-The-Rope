@@ -35,24 +35,26 @@ body {
     width: 40%;
 }
 
-#menu #play-button {
+.ctdbutton{
     background: url('../assets/buttonNormal.png')no-repeat;
+    font-family: gooddp;
+    color:#fff;
+    text-align: center;
+}
+.ctdbutton:hover{
+    background: url('../assets/buttonHover.png')no-repeat;
+}
+
+#menu #play-button {
     position: absolute;
     top:75%;
     left:38%;
     height: 60px;
     width: 292px;
-    font-family: gooddp;
-    color:#fff;
     font-size: 35px;
-    text-align: center;
 }
 #play-button h3 {
     padding:10px;
-}
-
-#menu #play-button:hover {
-    background: url('../assets/buttonHover.png')no-repeat;
 }
 
 .rotate {
@@ -128,4 +130,22 @@ body {
 }
 #restart-button:hover {
     opacity: 1;
+}
+#gameover-menu{
+    position: absolute;
+    top:70vh;
+    left:30vw;
+}
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+.button-group .inside-button {
+    background-size: 100% 50px;
+    height:50px;
+    width: 150px;
+    font-size:32px;
+    padding-top: 7px;
+    margin:10px;
 }

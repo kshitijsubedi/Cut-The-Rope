@@ -9,7 +9,7 @@ class StarScore {
     this.gameoverScoreImage.src = './assets/gameOverStarScore.png';
     this.loadStarScore();
     this.index = this.getStarScore();
-
+    this.gameOverText = ['Great!','Lets Go!','OK!','Nice','Sweet']
     this.spritePadding = 15;
   }
 
@@ -40,13 +40,20 @@ class StarScore {
     this.index = this.getStarScore();
   }
 
-  drawGameStarScore(scoreStatus) {
+  drawCompliment(){
+    
+  }
+
+  drawGameStarScore(scoreStatus,text) {
     ctx.beginPath();
     switch (scoreStatus.toLowerCase()) {
       case 'gameover':
         ctx.drawImage(this.gameoverScoreImage, 0, this.index * this.singleSpriteHeight, this.spriteWidth, this.singleSpriteHeight,
-          width / 2 - this.spriteWidth / 2 - this.spritePadding, height / 2 - this.singleSpriteHeight / 2 - this.spritePadding,
+          width/ 3 , height/5,
           this.spriteWidth, this.singleSpriteHeight);
+          ctx.font = "54px gooddp";
+          ctx.fillStyle='white'
+          ctx.fillText('Nice!', width/2, height/6);
         break;
 
       case 'ingame':
