@@ -7,7 +7,7 @@ class Star {
         this.starBloom.src = "./assets/starBloom.png";
         this.starDisappearImage = new Image();
         this.starDisappearImage.src = "./assets/starDisappear.png";
-        this.index = index?index:1;
+        this.index = index ? index : 1;
         this.hasDisappeared = false;
         this.hasAnimated = false;
         this.bouncingUp = true;
@@ -45,7 +45,7 @@ class Star {
     }
 
     starDisappearAnimation() {
-        this.hasDisappeared=true;
+        this.hasDisappeared = true;
         this.starAnimationIndex = 0;
         this.starAnimationNumOfRows = 11;
         this.starAnimationSpriteWidth = this.starDisappearImage.width;

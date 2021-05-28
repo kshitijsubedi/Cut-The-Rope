@@ -1,3 +1,4 @@
+// Audio Files
 const backgroundSound = new Audio("./assets/sounds/main.mp3"),
     star1Sound = new Audio("./assets/sounds/star_1.mp3"),
     star2Sound = new Audio("./assets/sounds/star_2.mp3"),

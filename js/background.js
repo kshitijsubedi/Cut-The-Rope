@@ -1,3 +1,4 @@
+// backgouned Image
 class Background {
     constructor() {
         this.backgroundImage = new Image();

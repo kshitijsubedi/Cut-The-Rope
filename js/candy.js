@@ -1,3 +1,6 @@
+// Candy Class
+// Pin Class (Top of the Rope)
+
 class Candy {
     constructor(position) {
         this.x = position ? position.x : 0;

@@ -1,3 +1,4 @@
+// Rope 
 class Rope {
     constructor(orig, dest, segment, options, points) {
         this.orig = orig;
@@ -5,10 +6,10 @@ class Rope {
         this.segment = segment;
         this.points = points ? points : [];
         this.sticks = [];
-        this.pins = []
+        this.pins = [];
         this.candy = options.candy || false;
         this.candyBall = this.candy ? new Candy() : false;
-        this.genRopes()
+        this.genRopes();
     }
     genRopes() {
         if (this.points.length == 0) {
@@ -37,16 +38,15 @@ class Rope {
             }
         }
     }
-    generatePins(){
-        this.points.forEach((point)=>{
-            if(point.pinned){
-                this.pins.push(new Pin({x:point.x,y:point.y}))
+    generatePins() {
+        this.points.forEach((point) => {
+            if (point.pinned) {
+                this.pins.push(new Pin({ x: point.x, y: point.y }));
             }
-        })
+        });
     }
 
     endPoint() {
-
         return this.points[this.points.length - 1];
     }
 
@@ -85,7 +85,7 @@ class Rope {
                 }
                 if (p.y > height) {
                     p.y = height;
-                  //  p.oldy = p.y + vy * bounce;
+                    //  p.oldy = p.y + vy * bounce;
                 } else if (p.y < 0) {
                     p.y = 0;
                     p.oldy = p.y + vy * bounce;
@@ -133,15 +133,15 @@ class Rope {
         this.updatePoints();
         // for (var i = 0; i < 5; i++) {
         this.updateSticks();
-           this.constrainPoints();
+        this.constrainPoints();
         // }
-        this.pins.forEach((pin)=>{
-            pin.renderPin()
-        })
+        this.pins.forEach((pin) => {
+            pin.renderPin();
+        });
         this.renderRopes();
-        this.pins.forEach((pin)=>{
-            pin.renderDot()
-        })
+        this.pins.forEach((pin) => {
+            pin.renderDot();
+        });
         if (this.candy) this.candyBall.renderCandy();
     }
 }

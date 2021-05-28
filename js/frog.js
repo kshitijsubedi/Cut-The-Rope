@@ -1,3 +1,6 @@
+// Frog Class
+// Animations + Integrations
+
 class Frog {
     constructor(position) {
         this.position = position;

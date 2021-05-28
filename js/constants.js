@@ -9,16 +9,16 @@ var bounce = 0.5,
     speed = 0.1;
 
 var music = true,
-    currentLevel=1,
-    currentStar=0,
-    stage = 'menu';
+    currentLevel = 1,
+    currentStar = 0,
+    stage = "menu";
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+const width = window.innerWidth;
+const height = window.innerHeight;
 
-    var canvas = document.getElementById("canvas"),
+var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d");
-    canvas.height = height;
-    canvas.width = width;
-    
+canvas.height = height;
+canvas.width = width;
+
 let transition = new Transition();
