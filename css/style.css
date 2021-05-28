@@ -8,6 +8,9 @@
 body {
     scrollbar-width: thin;
     cursor: url(../assets/select.cur),auto;
+    margin-right: 15vw;
+    margin-left:15vw;
+    background-color:#afb9c8;
 }
 
 #canvas {
@@ -30,7 +33,7 @@ body {
     background-size: contain;
     position: absolute;
     top:15%;
-    left:35%;
+    left:30%;
     height: 45%;
     width: 40%;
 }
@@ -48,7 +51,7 @@ body {
 #menu #play-button {
     position: absolute;
     top:75%;
-    left:38%;
+    left:35%;
     height: 60px;
     width: 292px;
     font-size: 35px;
@@ -82,9 +85,9 @@ body {
 #levels {
     position: absolute;
     padding-top:20vh;
-    padding-left:20vw;
+    padding-left:5vw;
     height: 95vh;
-    width: 95vw;
+    width: 70vw;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -107,8 +110,8 @@ body {
 
 #back-button {
     position: absolute;
-    left:10vw;
-    top:10vh;
+    left:5vw;
+    top:5vh;
     background:url('../assets/backNormal.png') no-repeat;
     background-size: contain;
     height:80px;
@@ -120,8 +123,8 @@ body {
 }
 #restart-button {
     position: absolute;
-    left:18%;
-    bottom:13%;
+    left:28%;
+    bottom:17%;
     background:url('../assets/restart.png') no-repeat;
     background-size: contain;
     height:44px;
@@ -134,17 +137,18 @@ body {
 #gameover-menu{
     position: absolute;
     top:70vh;
-    left:30vw;
+    left:35vw;
 }
 .button-group {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 
 }
 .button-group .inside-button {
     background-size: 100% 50px;
     height:50px;
-    width: 150px;
+    width: 130px;
     font-size:32px;
     padding-top: 7px;
     margin:10px;

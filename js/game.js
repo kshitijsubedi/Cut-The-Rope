@@ -147,11 +147,11 @@ class Game {
 
     mouseEvent() {
         canvas.addEventListener("mousemove", (e) => {
-            this.mousePosition.x = e.clientX;
+            this.mousePosition.x = e.clientX - 0.15*window.innerWidth;
             this.mousePosition.y = e.clientY;
         });
         canvas.addEventListener("mousedown", (e) => {
-            this.mousePosition.ex = e.clientX;
+            this.mousePosition.ex = e.clientX - 0.15*window.innerWidth;
             this.mousePosition.ey = e.clientY;
             this.isCutting = true;
         });

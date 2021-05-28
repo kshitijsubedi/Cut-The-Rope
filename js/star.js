@@ -1,3 +1,4 @@
+// Display and animate Stars
 class Star {
     constructor(position, index) {
         this.position = position;

@@ -14,8 +14,8 @@ playButton.addEventListener("click", (e) => {
 
 // Toggle Background Music with button.
 musicButton.style.background = `url('./assets/musicMute.png') no-repeat`;
-musicButton.style.left = "13%";
-musicButton.style.bottom = "13%";
+musicButton.style.left = "25%";
+musicButton.style.bottom = "17%";
 
 musicButton.addEventListener("click", (e) => {
     if (music) {

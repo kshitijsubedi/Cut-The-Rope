@@ -1,3 +1,4 @@
+// Display and update stars scores.
 class StarScore {
     constructor(position, stars) {
         this.position = position;
@@ -52,14 +53,14 @@ class StarScore {
                     this.index * this.singleSpriteHeight,
                     this.spriteWidth,
                     this.singleSpriteHeight,
-                    width / 3,
+                    width / 3.7,
                     height / 5,
                     this.spriteWidth,
                     this.singleSpriteHeight
                 );
                 ctx.font = "54px gooddp";
                 ctx.fillStyle = "white";
-                ctx.fillText("Nice!", width / 2, height / 6);
+                ctx.fillText("Nice!", width / 2.2, height / 6);
                 break;
 
             case "ingame":

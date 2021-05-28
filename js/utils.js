@@ -4,6 +4,9 @@ let distance = function (p0, p1) {
     return Math.sqrt(dx * dx + dy * dy);
 };
 
+// Transition Effect
+// Open and Close Effects
+
 class Transition {
     constructor() {
         this.step = 20;
@@ -29,6 +32,7 @@ class Transition {
         if (game) {
             window.cancelAnimationFrame(game.animationFrame);
             gameOverMenu.style.removeProperty("display");
+            restartButton.style.display = "none";
         }
         // var intr = setInterval(() => {
         this.topY += this.step;
@@ -46,6 +50,7 @@ class Transition {
         if (game) {
             window.cancelAnimationFrame(game.animationFrame);
             gameOverMenu.style.removeProperty("display");
+            restartButton.style.display = "none";
         }
         var intr = setInterval(() => {
             this.topY -= this.step;

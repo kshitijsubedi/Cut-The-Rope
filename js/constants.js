@@ -13,8 +13,8 @@ var music = true,
     currentStar = 0,
     stage = "menu";
 
-const width = window.innerWidth;
-const height = window.innerHeight;
+const width = document.body.clientWidth;
+const height = document.body.clientHeight;
 
 var canvas = document.getElementById("canvas"),
     ctx = canvas.getContext("2d");

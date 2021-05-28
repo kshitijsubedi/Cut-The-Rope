@@ -14,6 +14,7 @@ menuButton.addEventListener("click", () => {
     transition.open("levels");
     mainMenu.style.display = "none";
     levelScreen.style.removeProperty("display");
+    restartButton.style.display = "none";
     hideScreen();
 });
 nextButton.addEventListener("click", () => {
