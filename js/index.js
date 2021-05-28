@@ -2,8 +2,13 @@ let restartButton = document.getElementById('restart-button')
 let game;
 let startLevel = (levelIndex) => {
     restartButton.style.display='block'
-    currentLevel=levelIndex
-    game = new Game(levels[levelIndex])
+    if(levelIndex<levels.length){
+        currentLevel=levelIndex
+        game = new Game(levels[levelIndex])
+    }else {
+        currentLevel=levels.length-1
+        game = new Game(levels[levels.length-1])
+    }
 }
 
 restartButton.addEventListener('click',()=>{

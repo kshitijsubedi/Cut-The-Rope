@@ -46,6 +46,7 @@ class Rope {
     }
 
     endPoint() {
+
         return this.points[this.points.length - 1];
     }
 
@@ -84,7 +85,7 @@ class Rope {
                 }
                 if (p.y > height) {
                     p.y = height;
-                    p.oldy = p.y + vy * bounce;
+                  //  p.oldy = p.y + vy * bounce;
                 } else if (p.y < 0) {
                     p.y = 0;
                     p.oldy = p.y + vy * bounce;

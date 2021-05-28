@@ -15,6 +15,7 @@ class Game {
         this.hasEaten = false;
         this.isSad = false;
         this.mousePosition = {}
+        this.ropeGroupIndex=[0]
         this.initRope(this.candy)
         this.joinRopes()
         this.mouseEvent()
@@ -46,7 +47,7 @@ class Game {
     mainLoop(){
         this.animationFrame = requestAnimationFrame(this.mainLoop.bind(this));
         if(this.isGameOver){
-            if(this.isSad){
+            if(this.isSad ){
                 nextButton.style.display='none'
             } else {
                 nextButton.style.removeProperty('display');
@@ -71,11 +72,13 @@ class Game {
     joinRopes() {
         let newpoints = this.ropes[0].points;
         let newsticks = this.ropes[0].sticks;
+        this.ropeGroupIndex.push(newsticks.length)
         let joint = this.ropes[0].points[this.ropes[0].points.length - 1];
         this.ropes.forEach((rope, index) => {
             if (index > 0) {
                 newpoints = [...newpoints, ...rope.points];
                 newsticks = [...newsticks, ...rope.sticks];
+                this.ropeGroupIndex.push(newsticks.length)
                 let len = { p: rope.points.length, s: rope.sticks.length };
                 newsticks.push({
                     p0: joint,
@@ -143,8 +146,16 @@ class Game {
     }
 
     removeStick(index){
-        
-        this.mainRope.sticks.splice(index,1)
+        function inRange(x, min, max) {
+            return ((x-min)*(x-max) <= 0);
+        }
+        for(var i=0;i<this.ropeGroupIndex.length-1;i++){
+            let xx = inRange(index,this.ropeGroupIndex[i],this.ropeGroupIndex[i+1])
+            if(xx) {
+                this.mainRope.sticks.splice(this.ropeGroupIndex[i]+1,
+                    this.ropeGroupIndex[i+1]-(this.ropeGroupIndex[i]+1))
+                }
+        }
     }
 
     candyNearFrogDetection() {
